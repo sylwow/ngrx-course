@@ -7,8 +7,8 @@ import { AuthService } from "../auth.service";
 import { tap } from "rxjs/operators";
 import { noop } from "rxjs";
 import { Router } from "@angular/router";
-import * as fromAuth from '../reducers';
-import { AuthActions } from '../reducers/auth.action.types';
+import * as fromAuth from '../store/reducers';
+import { AuthActions } from '../store/actions/auth.action.types';
 
 @Component({
   selector: 'login',

@@ -21,11 +21,14 @@ import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
 import { EntityDataModule } from '@ngrx/data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AuthGuard } from './guards/auth.guard';
+import { entityConfig } from './entity-metadata';
 
 
 const routes: Routes = [
   {
     path: 'courses',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
   },
   {
@@ -53,7 +56,10 @@ const routes: Routes = [
     MatToolbarModule,
     AuthModule.forRoot(),
     StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    EffectsModule.forRoot([]),
+    EntityDataModule.forRoot(entityConfig),
+    StoreRouterConnectingModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

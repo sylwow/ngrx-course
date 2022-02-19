@@ -1254,25 +1254,33 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@ngrx/data@^8.0.1":
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/data/-/data-8.6.1.tgz#a1f21ee726d88f4ad4eaba1a1e423fd16fc07c19"
-  integrity sha512-+fc7vSN4flsiNWzMaxOVx54wolgsrLWib2oLEDRKAyyIGtW/dVb/lQmfIUUS4bfBT8gxE/IBLXCTtbwR6IGz/Q==
+"@ngrx/data@13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/data/-/data-13.0.2.tgz#f9ef155bf6fdd874ce6b82a76ce5f2f2cb09a0de"
+  integrity sha512-DpPxmtmG9AprXABmreXH7ilHQDGawHFJyNUOR/WS+dstamtFO0WMIr4BhNYRdDGBWqcXWNyuEj14ipjKCTfdKw==
+  dependencies:
+    tslib "^2.0.0"
 
-"@ngrx/effects@^8.0.1":
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-8.6.1.tgz#6038a5e9cc3db27fdea4cfbcc6e2ae63721e8a26"
-  integrity sha512-nvokfJ+LXez3DuAVSWW4w/eMrjPoSpzyHSToIVbDTVIF4JZ3g8fKdi9aHYAeXy2MDR1BaV7zMTmM9w6J0TDZtw==
+"@ngrx/effects@13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-13.0.2.tgz#785e54459efaef70ed3754a33d9f4ddd0ff9f033"
+  integrity sha512-7yW/KCxlRatDkdEriSnORlOYX8+1QAWEjPulNmHSPwehkzTQ3fIPfRBQy8xP8bnjwvGxnEZNwQlU4q1KVYOfhg==
+  dependencies:
+    tslib "^2.0.0"
 
-"@ngrx/entity@^8.0.1":
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-8.6.1.tgz#8b227746c1009adcf172a205aec30b416222428a"
-  integrity sha512-hfwWxAthKKL9d+7IjUpQ0pAPIdjuGlLQD6/wHNb+w9MmqlCwY15ggdHc5hgr2Zd/+XJO1qRqOekKSQQRZC8bXQ==
+"@ngrx/entity@13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-13.0.2.tgz#99fceb9f160de67106364e27299e242b1608affc"
+  integrity sha512-sAN/YDvDNy4fmCOWU8LfPp8YI8XJcvmO89XTRSoJjo3O9BIbCSEw2gYHe1V7gWHLY5Pr9wiMybKhd4RHtzFHgQ==
+  dependencies:
+    tslib "^2.0.0"
 
-"@ngrx/router-store@^8.0.1":
-  version "8.6.1"
-  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-8.6.1.tgz#b631f8d6d2b7204ab3396b9d678f0134c674fe3d"
-  integrity sha512-WOFSpxfaePoFu6gYJbXs7vBH8YG/m27ySeN9jBmlO94CkwWN9w3XXQebMVu47EoKO+YpMlF2l2Ifakhefq0TWQ==
+"@ngrx/router-store@13.0.2":
+  version "13.0.2"
+  resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-13.0.2.tgz#e57084cd74071760378645417bba94805c8b4514"
+  integrity sha512-XrzHjrD2hhnXdGeIpQm/msN77hoAL/QD3ZYGFJs3yT5d3x/T3L1JFlra7wC0OlKJkOs6zAh5Kz9cJ94YO/TEtQ==
+  dependencies:
+    tslib "^2.0.0"
 
 "@ngrx/schematics@^13.0":
   version "13.0.2"
