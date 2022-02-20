@@ -23,6 +23,7 @@ import { EntityDataModule } from '@ngrx/data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AuthGuard } from './guards/auth.guard';
 import { entityConfig } from './entity-metadata';
+import { metaReducers, reducers } from './store/reducers/app.reducer';
 
 
 const routes: Routes = [
@@ -55,11 +56,23 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true,
+        strictStateSerializability: true,
+        strictActionTypeUniqueness: true,
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production, }),
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot({
+      stateKey: 'router',
+      routerState: RouterState.Minimal,
+    })
   ],
   bootstrap: [AppComponent]
 })
