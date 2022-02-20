@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { compareCourses, Course } from '../model/course';
 import { Observable } from "rxjs";
 import { defaultDialogConfig } from '../shared/default-dialog-config';
 import { EditCourseDialogComponent } from '../edit-course-dialog/edit-course-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { map, shareReplay } from 'rxjs/operators';
+import { filter, map, shareReplay } from 'rxjs/operators';
 import { CoursesHttpService } from '../services/courses-http.service';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { selectAdvancedCourses, selectAllCourses, selectBeginnerCourses, selectCourseState, selectPromoTotal } from '../course.selectors';
+import { CourseEntityService } from '../services/course-entity.service';
 
 
 
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
 
@@ -30,8 +31,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private store: Store<AppState>,
-    private coursesHttpService: CoursesHttpService) {
+    private courseEntityService: CourseEntityService) {
 
   }
 
@@ -41,12 +41,20 @@ export class HomeComponent implements OnInit {
 
   reload() {
 
-    this.beginnerCourses$ = this.store.pipe(select(selectBeginnerCourses));
+    this.beginnerCourses$ = this.courseEntityService.entities$
+      .pipe(
+        map(courses => courses.filter(c => c.category === 'BEGINNER'))
+      );
 
-    this.advancedCourses$ = this.store.pipe(select(selectAdvancedCourses));
+    this.advancedCourses$ = this.courseEntityService.entities$
+      .pipe(
+        map(courses => courses.filter(c => c.category === 'ADVANCED'))
+      );
 
-    this.promoTotal$ = this.store.pipe(select(selectPromoTotal));
-
+    this.promoTotal$ = this.courseEntityService.entities$
+      .pipe(
+        map(courses => courses.filter(c => c.promo).length)
+      );
   }
 
   onAddCourse() {

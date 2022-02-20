@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Course } from '../model/course';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
 import { CoursesHttpService } from '../services/courses-http.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
-import { courseUpdated } from '../course.actions';
 import { Update } from '@ngrx/entity';
+import { CourseEntityService } from '../services/course-entity.service';
 
 @Component({
   selector: 'course-dialog',
   templateUrl: './edit-course-dialog.component.html',
-  styleUrls: ['./edit-course-dialog.component.css']
+  styleUrls: ['./edit-course-dialog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditCourseDialogComponent {
 
@@ -28,7 +29,7 @@ export class EditCourseDialogComponent {
 
   constructor(
     private fb: FormBuilder,
-    private store: Store<AppState>,
+    private courseEntityService: CourseEntityService,
     private dialogRef: MatDialogRef<EditCourseDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     private coursesService: CoursesHttpService) {
@@ -68,13 +69,18 @@ export class EditCourseDialogComponent {
       ...this.form.value
     };
 
-    const update: Update<Course> = {
-      id: course.id,
-      changes: course
+    if (this.mode == 'update') {
+      this.courseEntityService.update(course)
+      this.dialogRef.close();
     }
-    this.store.dispatch(courseUpdated({ update }));
+    if (this.mode == 'create') {
+      this.courseEntityService.add(course)
+        .subscribe(res => {
+          console.log(res);
+          this.dialogRef.close();
+        });
+    }
 
-    this.dialogRef.close();
   }
 
 

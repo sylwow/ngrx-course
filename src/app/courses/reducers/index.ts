@@ -17,27 +17,27 @@ import { compareCourses, Course } from '../model/course';
 //   ids: number[]
 // }
 
-export interface CoursesState extends EntityState<Course> {
-  coursesLoaded: boolean
-}
+// export interface CoursesState extends EntityState<Course> {
+//   coursesLoaded: boolean
+// }
 
-export const adapter = createEntityAdapter<Course>({
-  sortComparer: compareCourses
-});
+// export const adapter = createEntityAdapter<Course>({
+//   sortComparer: compareCourses
+// });
 
-export const initialCoursesState = adapter.getInitialState({
-  coursesLoaded: false
-});
+// export const initialCoursesState = adapter.getInitialState({
+//   coursesLoaded: false
+// });
 
-export const courseReducer = createReducer(
+// export const courseReducer = createReducer(
 
-  initialCoursesState,
+//   initialCoursesState,
 
-  on(CourseActions.allCoursesLoaded, (state, action) => adapter.setAll(action.courses, { ...state, coursesLoaded: true })),
-  on(CourseActions.courseUpdated, (state, action) => adapter.updateOne(action.update, state)),
+//   on(CourseActions.allCoursesLoaded, (state, action) => adapter.setAll(action.courses, { ...state, coursesLoaded: true })),
+//   on(CourseActions.courseUpdated, (state, action) => adapter.updateOne(action.update, state)),
 
-);
+// );
 
 
-export const { selectAll } = adapter.getSelectors();
+// export const { selectAll } = adapter.getSelectors();
 

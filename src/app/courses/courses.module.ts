@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Routes } from '@angular/router';
-import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import { EntityDataModule, EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
 import { compareCourses, Course } from './model/course';
 
 import { compareLessons, Lesson } from './model/lesson';
@@ -29,7 +29,9 @@ import { CoursesResolver } from './courses.resolver';
 import { CoursesEffects } from './courses.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { courseReducer } from './reducers';
+import { CourseEntityService } from './services/course-entity.service';
+import { CoursesDataService } from './services/courses-data.service';
+import { LessonEntityService } from './services/lesson-entity.service';
 
 
 export const coursesRoutes: Routes = [
@@ -42,9 +44,31 @@ export const coursesRoutes: Routes = [
   },
   {
     path: ':courseUrl',
-    component: CourseComponent
+    component: CourseComponent,
+    resolve: {
+      courses: CoursesResolver
+    }
   }
 ];
+
+const entityMetadata: EntityMetadataMap = {
+  Course: {
+    sortComparer: compareCourses,
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+      // add sould be pesimistic ,
+      optimisticDelete: true
+    }
+  },
+  Lesson: {
+    sortComparer: compareCourses,
+    entityDispatcherOptions: {
+      optimisticUpdate: true,
+      // add sould be pesimistic ,
+      optimisticDelete: true
+    }
+  }
+};
 
 @NgModule({
   imports: [
@@ -65,8 +89,8 @@ export const coursesRoutes: Routes = [
     MatMomentDateModule,
     ReactiveFormsModule,
     RouterModule.forChild(coursesRoutes),
-    EffectsModule.forFeature([CoursesEffects]),
-    StoreModule.forFeature('courses', courseReducer)
+    //EffectsModule.forFeature([CoursesEffects]),
+    //StoreModule.forFeature('courses', courseReducer),
   ],
   declarations: [
     HomeComponent,
@@ -84,14 +108,18 @@ export const coursesRoutes: Routes = [
   providers: [
     CoursesHttpService,
     CoursesResolver,
-    CoursesEffects
+    CourseEntityService,
+    LessonEntityService,
+    CoursesDataService
   ]
 })
 export class CoursesModule {
 
-  constructor() {
-
+  constructor(
+    eds: EntityDefinitionService,
+    eds$: EntityDataService,
+    courseDataService: CoursesDataService) {
+    eds.registerMetadataMap(entityMetadata);
+    eds$.registerService('Course', courseDataService);
   }
-
-
 }
